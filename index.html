@@ -1,5 +1,54 @@
 <!DOCTYPE html>
+	<style>
+body {
+	display: grid;
+	grid-template-rows: auto auto;
+	grid-template-columns: auto auto;
+	align-items: center;
+	justify-content: center;
+}
+#inputURL {
+	grid-area: 1/1/2/3;
+	font-size: 5vh;
+	width: 90vw;
+	text-align: center;
+}
+#qr {
+	display: flex;
+	justify-content: center;
+	width: 50vw;
+	height: 80vh;
+	margin: 5vh;
+}
+#qr img {
+	height: 100%;
+}
+#frame {
+	width: 40vw;
+	height: 30vw;
+	background: white;
+}
+	</style>
   <body>
     <input type="text" id="inputURL" placeholder="paste URL here"/>
+		<div id="qr"></div>
+		<iframe id="frame"></iframe>
   </body>
+	<script src="qrcode.min.js"></script>
+	<script>
+function onInputURLChange(ev) {
+	console.log(ev);
+	//update qr code
+	while(qr.firstChild) {
+		qr.removeChild(qr.firstChild);
+	}
+	new QRCode(document.getElementById("qr"), inputURL.value);
+	//update frame
+	frame.src = inputURL.value
+}
+const inputURL = document.getElementById("inputURL");
+const divQr = document.getElementById("qr");
+const frame = document.getElementById("frame");
+inputURL.addEventListener("input", onInputURLChange);
+	</script>
 </html>
